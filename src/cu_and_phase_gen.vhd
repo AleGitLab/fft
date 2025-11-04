@@ -41,13 +41,13 @@ entity cu_and_phase_gen is
     mux_1K   		: out std_logic;
     mux_2K   		: out std_logic;
     rst 	    	: in  std_logic;
-    start 	 	: in  std_logic;
-    data_valid          : out std_logic;
+    start 	 		: in  std_logic;
+    data_valid   	: out std_logic;
     n_points 		: in  std_logic_vector(1 downto 0);
     mux_sel_j		: out std_logic_vector(NRAMPHASE*2-1 downto 0);
-    bfI_mux_sel         : out std_logic_vector(NRAMPHASE*2-1 downto 0);
-    bfII_mux_sel        : out std_logic_vector(NRAMPHASE*2-1 downto 0);
-    wr_en               : out std_logic_vector(NSTAGE*2-1 downto 0);
+    bfI_mux_sel  	: out std_logic_vector(NRAMPHASE*2-1 downto 0);
+    bfII_mux_sel 	: out std_logic_vector(NRAMPHASE*2-1 downto 0);
+    wr_en        	: out std_logic_vector(NSTAGE*2-1 downto 0);
     rd_en 		: out std_logic_vector(NSTAGE*2-1 downto 0);
     tap_Re 	 	: out arr_tap;
     tap_Im 	 	: out arr_tap);
@@ -59,12 +59,12 @@ architecture beh of cu_and_phase_gen is
 component start_and_en_gen_4K
 
   port (
-    clk                 : in  std_logic;
-    rst                 : in  std_logic;
-    start        	: in  std_logic;
-    data_valid          : out std_logic;
-    start_out           : out std_logic_vector(4 downto 0);
-    bf_start            : out std_logic_vector(5 downto 0);
+    clk      	: in  std_logic;
+    rst       	: in  std_logic;
+    start       : in  std_logic;
+    data_valid 	: out std_logic;
+    start_out   : out std_logic_vector(4 downto 0);
+    bf_start    : out std_logic_vector(5 downto 0);
     wr_en 		: out std_logic_vector(11 downto 0);
     rd_en 		: out std_logic_vector(11 downto 0));
 
@@ -164,7 +164,6 @@ signal rd_en_4K, rd_en_2K, rd_en_1K :  std_logic_vector(NSTAGE*2-1 downto 0);
 signal data_valid_4K, data_valid_2K, data_valid_1K :  std_logic;
 signal int_start_4K, int_start_2K, int_start_1K : std_logic_vector(4 downto 0);
 
-		
 signal int_tap_Re, int_tap_Im : arr_tap;
 signal mux_sel, mux_sel_i : arr_mux_sel;
 signal int_bin_count : bin_c; 
@@ -291,9 +290,9 @@ begin
 
   inst_count_1 : stage_count
     generic map (
-      NBITTC         => 9,
-      NBITINCREMENT  => 4,
-      logNWORDS      => 12)
+		NBITTC         => 9,
+		NBITINCREMENT  => 4,
+		logNWORDS      => 12)
     port map (
       counters_start  => int_start(1),
       bf_start        => int_bf_start(1),
@@ -307,13 +306,13 @@ begin
 
   inst_count_2 : stage_count
     generic map (
-      NBITTC         => 7,
-      NBITINCREMENT  => 6,
-      logNWORDS      => 12)
+		NBITTC         => 7,
+		NBITINCREMENT  => 6,
+		logNWORDS      => 12)
     port map (
       counters_start  => int_start(2),
       bf_start        => int_bf_start(2),
-      ck 	      => clk,
+      ck 	      	  => clk,
       reset  	      => rst,
       mux_sel_j       => mux_sel_j(2),
       bfI_mux_sel     => bfI_mux_sel_i(2),
@@ -324,13 +323,13 @@ begin
 
   inst_count_3 : stage_count
     generic map (
-      NBITTC         => 5,
-      NBITINCREMENT  => 8,
-      logNWORDS      => 12)
+		NBITTC         => 5,
+		NBITINCREMENT  => 8,
+		logNWORDS      => 12)
     port map (
       counters_start  => int_start(3),
       bf_start        => int_bf_start(3),
-      ck 	      => clk,
+      ck 	      	  => clk,
       reset  	      => rst,
       mux_sel_j       => mux_sel_j(3),
       bfI_mux_sel     => bfI_mux_sel_i(3),
@@ -339,11 +338,12 @@ begin
       bin_count       => int_bin_count(3));    
 		  
 
-  inst_count_4 : stage_count
-    generic map (
-      NBITTC         => 3,
-      NBITINCREMENT  => 10, 
-      logNWORDS      => 12)
+  
+inst_count_4 : stage_count
+	generic map (
+		NBITTC         => 3,
+		NBITINCREMENT  => 10, 
+		logNWORDS      => 12)
     port map (
       counters_start  => int_start(4),
       bf_start        => int_bf_start(4),
@@ -355,14 +355,14 @@ begin
       terminal_count  => int_terminal_count_4,
       bin_count       => int_bin_count(4));
 
-  inst_last_count : last_stage_count
-    port map (
-      bf_start          => int_bf_start(5),
-      ck                => clk,
-      reset             => rst,
-      mux_sel_j         => mux_sel_j(5),
-      bfI_mux_sel       => bfI_mux_sel_i(5),
-      bfII_mux_sel      => bfII_mux_sel_i(5));
+inst_last_count : last_stage_count
+	port map (
+		  bf_start          => int_bf_start(5),
+		  ck                => clk,
+		  reset             => rst,
+		  mux_sel_j         => mux_sel_j(5),
+		  bfI_mux_sel       => bfI_mux_sel_i(5),
+		  bfII_mux_sel      => bfII_mux_sel_i(5));
 		  
 
   add_conn: process (n_points, int_bin_count)

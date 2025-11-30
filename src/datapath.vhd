@@ -35,8 +35,8 @@ entity datapath is
   generic (
     NSTAGE         	: integer;
     NBITINT       	: integer;
-    NBITTAP             : integer;
-    NBITIN              : integer);
+    NBITTAP         : integer;
+    NBITIN          : integer);
 
   port (
     clk           	: in  std_logic;
@@ -48,7 +48,7 @@ entity datapath is
     tap_in_Im 	  	: in  arr_tap;
     mux_sel_2K    	: in  std_logic;
     mux_sel_1K    	: in  std_logic;
-    fft_nifft           : in  std_logic;		
+    fft_nifft       : in  std_logic;		
     dp_to_bfI   	: in  bf_fifo; 
     dp_to_bfII   	: in  bf_fifo; 
     dp_from_bfI  	: out bf_fifo;
